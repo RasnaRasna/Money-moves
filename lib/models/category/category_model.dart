@@ -1,4 +1,5 @@
 import 'package:hive_flutter/adapters.dart';
+
 part 'category_model.g.dart';
 
 @HiveType(typeId: 2)
@@ -19,7 +20,7 @@ class CategoryModel {
   final String name;
 
   @HiveField(2)
-  final bool isDeleted;  
+  final bool isDeleted;
 
   @HiveField(3)
   final CategoryType type;
@@ -35,11 +36,20 @@ class CategoryModel {
   }
 }
 
-
 @HiveType(typeId: 3)
 class SelectCategory {
   @HiveField(0)
   final String selectcategory;
 
   SelectCategory({required this.selectcategory});
+}
+
+@HiveType(typeId: 4)
+class Splashscreens extends HiveObject {
+  @HiveField(0)
+  int screens;
+
+  Splashscreens({required this.screens});
+  static Box<Splashscreens> getdata() =>
+      Hive.box<Splashscreens>('Splashscreens');
 }

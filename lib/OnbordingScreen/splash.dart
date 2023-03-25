@@ -1,10 +1,30 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:money_management2/OnbordingScreen/onbordingScreen.dart';
+import 'package:money_management2/OnbordingScreen/skip%20page%20view/page_view.dart';
+import 'package:money_management2/OnbordingScreen/start.dart';
+import 'package:money_management2/main.dart';
+import 'package:money_management2/models/category/category_model.dart';
 
-class HomePage extends StatelessWidget {
+import '../widgets/bottonm google/gbottom_bar.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    Splashscreens.getdata().values.isEmpty
+        ? const Pageview()
+        : const Bottomnav();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +43,9 @@ class HomePage extends StatelessWidget {
         duration: 2000,
         backgroundColor: Colors.transparent,
         splashTransition: SplashTransition.fadeTransition,
-        nextScreen: const OnboardingScreen(),
+        nextScreen: Splashscreens.getdata().values.isEmpty
+            ? const Pageview()
+            : const Bottomnav(),
         splash: Scaffold(
           backgroundColor: Colors.transparent,
           body: Column(

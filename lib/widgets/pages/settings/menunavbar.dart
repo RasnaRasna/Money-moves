@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:money_management2/widgets/pages/about.dart';
-import 'package:money_management2/widgets/pages/privacy.dart';
+import 'package:flutter_share/flutter_share.dart';
+import 'package:money_management2/widgets/pages/settings/about.dart';
+import 'package:money_management2/widgets/pages/settings/privacy.dart';
 import 'package:money_management2/widgets/pages/settings/reset.dart';
+// import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MenuNavbar extends StatelessWidget {
@@ -61,8 +63,8 @@ class MenuNavbar extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Reset Data'),
-                      content: Text(
+                      title: const Text('Reset Data'),
+                      content: const Text(
                         'Are you sure you want to reset all data?',
                         style: TextStyle(fontSize: 20),
                       ),
@@ -71,11 +73,11 @@ class MenuNavbar extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text('CANCEL'),
+                          child: const Text('CANCEL'),
                         ),
                         TextButton(
                           onPressed: () {
-                            resetAlldatas();
+                            resetAllData(context);
                             // Navigator.of(context).pop();
                             Navigator.pop(context);
                           },
@@ -150,6 +152,9 @@ class MenuNavbar extends StatelessWidget {
               borderRadius: BorderRadius.circular(40),
             ),
             child: ListTile(
+              onTap: () {
+                share();
+              },
               // onTap: () async {
               //   await Share.share(
               //     'Check out this awesome app!',
@@ -157,13 +162,10 @@ class MenuNavbar extends StatelessWidget {
               //     sharePositionOrigin: const Rect.fromLTWH(0, 0, 100, 100),
               //   );
               // },
-              // Navigator.of(context)
-              //     .push(MaterialPageRoute(builder: (ctx) => const Terms()));
-
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
-              // tileColor: Color.fromARGB(181, 250, 163, 239),
+
               leading: IconButton(
                 onPressed: () {},
                 icon: const Icon(
@@ -188,7 +190,7 @@ class MenuNavbar extends StatelessWidget {
             child: ListTile(
               onTap: () async {
                 const url =
-                    'mailto:rasnack7@gmail.com?subject=Review on Money Management &body= Can you help me';
+                    'mailto:rasnack7@gmail.com?subject=Review on Money Moves &body= need';
                 try {
                   Uri uri = Uri.parse(url);
                   await launchUrl(uri);
@@ -197,13 +199,6 @@ class MenuNavbar extends StatelessWidget {
                   log("error");
                 }
               },
-              // onTap: () async {
-              //   await Share.share(
-              //     'Check out this awesome app!',
-              //     subject: 'App recommendation',
-              //     sharePositionOrigin: const Rect.fromLTWH(0, 0, 100, 100),
-              //   );
-              // },
 
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
@@ -226,4 +221,9 @@ class MenuNavbar extends StatelessWidget {
       ),
     );
   }
+}
+
+Future share() async {
+  await FlutterShare.share(
+      title: ' Money Moves', text: 'Money Moves ', linkUrl: 'link');
 }

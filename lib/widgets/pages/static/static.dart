@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:money_management2/models/category/category_model.dart';
-import 'package:money_management2/widgets/pages/AllStatics/all_statics.dart';
-import 'package:money_management2/widgets/pages/Expensestatics/expense_statics.dart';
+import 'package:money_management2/widgets/pages/static/all_statics.dart';
+import 'package:money_management2/widgets/pages/static/expense_income_statics.dart';
 
 class Statics extends StatelessWidget {
   const Statics({super.key});
@@ -24,21 +25,6 @@ class Statics extends StatelessWidget {
             child: Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(
-                actions: [],
-                // PopupMenuButton<int>(
-                //   itemBuilder: (context) => [
-                //     const PopupMenuItem(child: Text('Today')),
-                //     const PopupMenuItem(
-                //       child: Text("Yesterday"),
-                //     ),
-                //     const PopupMenuItem(
-                //       child: Text("Month"),
-                //     ),
-                //   ],
-                //   color: Colors.white,
-                //   elevation: 2,
-                // )
-
                 title: Center(
                     child: Text(
                   'Money moves',

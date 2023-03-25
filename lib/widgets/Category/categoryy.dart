@@ -2,10 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:money_management2/db/category/category_db.dart';
 import 'package:money_management2/widgets/Category/popup_category.dart';
-import 'package:money_management2/widgets/pages/Expensecategory/expense_grid.dart';
-import 'package:money_management2/widgets/pages/IncomeCategory/income_grid_category.dart';
+import 'package:money_management2/widgets/Category/expense_grid.dart';
+import 'package:money_management2/widgets/Category/income_grid_category.dart';
 
 ValueNotifier<bool> expense = ValueNotifier(false);
 ValueNotifier<bool> income = ValueNotifier(false);
@@ -98,12 +99,15 @@ class Categoryy extends StatelessWidget {
             ),
             body: const TabBarView(
                 children: [IncomeCategory(), ExpenseCategory()]),
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: Color.fromARGB(255, 10, 92, 130),
-              onPressed: () {
-                showCategoryAddPopup(context);
-              },
-              child: const Icon(Icons.add),
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 62),
+              child: FloatingActionButton(
+                backgroundColor: Color.fromARGB(255, 10, 92, 130),
+                onPressed: () {
+                  showCategoryAddPopup(context);
+                },
+                child: const Icon(Icons.add),
+              ),
             ),
           ),
         ),

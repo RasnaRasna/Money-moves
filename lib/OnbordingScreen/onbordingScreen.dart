@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:money_management2/widgets/pages/skipone/skipone.dart';
-import 'package:money_management2/widgets/pages/skiptwo/skiptwo.dart';
-import 'package:money_management2/widgets/pages/started/start.dart';
+import 'package:money_management2/OnbordingScreen/skipone.dart';
+import 'package:money_management2/OnbordingScreen/skiptwo.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -23,7 +22,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           children: const [
             SkipOne(),
             Skiptwo(),
-            Started(),
           ],
         ),
         Container(

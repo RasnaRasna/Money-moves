@@ -82,45 +82,42 @@ class _EditTransactionState extends State<EditTransaction> {
           children: [
             Column(
               children: [
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        Radio(
-                            activeColor: const Color.fromARGB(255, 10, 92, 130),
-                            value: CategoryType.income,
-                            groupValue: _selectedCategorytype,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _selectedCategorytype = CategoryType.income;
-                                _categoryID = null;
-                              });
-                            }),
-                        const Text('income'),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Radio(
-                            activeColor: const Color.fromARGB(255, 10, 92, 130),
-                            value: CategoryType.expense,
-                            groupValue: _selectedCategorytype,
-                            onChanged: (newValue) {
-                              setState(() {
-                                _selectedCategorytype = CategoryType.expense;
-                                _categoryID = null;
-                              });
-                            }),
-                        const Text('Expense'),
-                      ],
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Row(
+                //       children: [
+                //         Radio(
+                //             activeColor: const Color.fromARGB(255, 10, 92, 130),
+                //             value: CategoryType.income,
+                //             groupValue: _selectedCategorytype,
+                //             onChanged: (newValue) {
+                //               setState(() {
+                //                 _selectedCategorytype = CategoryType.income;
+                //                 _categoryID = null;
+                //               });
+                //             }),
+                //         const Text('income'),
+                //       ],
+                //     ),
+                //     Row(
+                //       children: [
+                //         Radio(
+                //             activeColor: const Color.fromARGB(255, 10, 92, 130),
+                //             value: CategoryType.expense,
+                //             groupValue: _selectedCategorytype,
+                //             onChanged: (newValue) {
+                //               setState(() {
+                //                 _selectedCategorytype = CategoryType.expense;
+                //                 _categoryID = null;
+                //               });
+                //             }),
+                //         const Text('Expense'),
+                //       ],
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(
-                  height: 10,
-                ),
-                const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -366,15 +363,6 @@ class _EditTransactionState extends State<EditTransaction> {
     TransactionDB.instance.refresh();
   }
 }
-
-// Future<void> showSnackbarMessage(BuildContext context) async {
-//   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-//     behavior: SnackBarBehavior.floating,
-//     margin: EdgeInsets.all(30),
-//     content: Text('Items are Requierd'),
-//     backgroundColor: Colors.red,
-//   ));
-// }
 
 String parseDate(DateTime selectedDate) {
   return DateFormat.MMMd().format(selectedDate);

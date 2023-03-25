@@ -1,23 +1,28 @@
-import 'dart:ffi';
-
+import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
+
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:money_management2/db/category/category_db.dart';
 import 'package:money_management2/db/transaction/transaction_db.dart';
 import 'package:money_management2/models/category/category_model.dart';
 import 'package:money_management2/models/transactions/transaction_model.dart';
 import 'package:money_management2/widgets/pages/Addtranscation/addtransaction.dart';
-import 'package:money_management2/widgets/pages/Menunavbar.dart';
+
+import 'package:money_management2/widgets/pages/search/search.dart';
 import 'package:money_management2/widgets/pages/ViewAll/transactionn.dart';
 
 import '../ViewAll/view_all.dart';
+import '../settings/menunavbar.dart';
 
 class HomeTransactonn extends StatelessWidget {
   const HomeTransactonn({super.key});
 
   @override
   Widget build(BuildContext context) {
+    overViewListNotifier.value =
+        TransactionDB.instance.transactionListNotifier.value;
+
     return ValueListenableBuilder(
       valueListenable: TransactionDB.instance.transactionListNotifier,
       builder: (context, List<transactionModel> value, _) {
@@ -55,13 +60,16 @@ class HomeTransactonn extends StatelessWidget {
                 style: GoogleFonts.acme(fontSize: 30, color: Colors.black),
               ),
             ),
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: Color.fromARGB(255, 10, 92, 130),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => const AddTransaction()));
-              },
-              child: const Icon(Icons.add),
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 62),
+              child: FloatingActionButton(
+                backgroundColor: Color.fromARGB(255, 10, 92, 130),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const AddTransaction()));
+                },
+                child: const Icon(Icons.add),
+              ),
             ),
             // side menu
             drawer: const MenuNavbar(),
@@ -70,141 +78,138 @@ class HomeTransactonn extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  SizedBox(
+                  BlurryContainer(
+                    blur: 50,
+                    width: double.infinity,
                     height: 250,
-                    width: 410,
-                    child: Card(
-                      color: const Color.fromARGB(255, 255, 242, 242),
-                      elevation: 20,
-                      child: Stack(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(top: 30),
-                            child: Align(
-                              alignment: Alignment.topCenter,
-                              child: SizedBox(
-                                height: 30,
-                                child: Text(
-                                  'Current Balance',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 25,
-                                  ),
+                    elevation: 26,
+                    color: Colors.blue.withOpacity(0.1),
+                    padding: const EdgeInsets.all(8),
+                    borderRadius: const BorderRadius.all(Radius.circular(30)),
+                    child: Stack(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 60),
+                          child: Align(
+                            alignment: Alignment.topCenter,
+                            child: SizedBox(
+                              height: 30,
+                              child: Text(
+                                'Current Balance',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 25,
                                 ),
                               ),
                             ),
                           ),
+                        ),
 
-                          Align(
-                            alignment: Alignment.center,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                        Align(
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.currency_rupee_sharp,
+                                color: Colors.black,
+                                size: 30,
+                              ),
+                              Text(
+                                totalbalance.toString(),
+                                style: const TextStyle(
+                                    fontSize: 25, color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, bottom: 30),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                const Icon(
-                                  Icons.currency_rupee_sharp,
-                                  color: Colors.black,
-                                  size: 30,
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 14),
+                                  child: Text(
+                                    'Expense',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Color.fromARGB(255, 154, 20, 10),
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                                Text(
-                                  totalbalance.toString(),
-                                  style: const TextStyle(
-                                      fontSize: 25, color: Colors.black),
+                                const SizedBox(
+                                  height: 5,
                                 ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const Icon(
+                                      Icons.currency_rupee,
+                                      color: Color.fromARGB(255, 154, 20, 10),
+                                    ),
+                                    Text(
+                                      totalexpense.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        color: Color.fromARGB(255, 154, 20, 10),
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           ),
-
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 20, bottom: 30),
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.only(left: 14),
-                                    child: Text(
-                                      'Income',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color:
-                                              Color.fromARGB(255, 34, 150, 38),
-                                          fontWeight: FontWeight.bold),
+                        ),
+                        //
+                        // money
+                        Padding(
+                          padding: const EdgeInsets.only(right: 20, bottom: 30),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Column(
+                              // mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(right: 14),
+                                  child: Text(
+                                    "Income",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Color.fromARGB(255, 34, 150, 38),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    const Icon(
+                                      Icons.currency_rupee,
+                                      color: Color.fromARGB(255, 34, 150, 38),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const Icon(
-                                        Icons.currency_rupee,
+                                    Text(
+                                      totalincome.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 20,
                                         color: Color.fromARGB(255, 34, 150, 38),
                                       ),
-                                      Text(
-                                        totalincome.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          color:
-                                              Color.fromARGB(255, 34, 150, 38),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                                    )
+                                  ],
+                                )
+                              ],
                             ),
                           ),
-                          //
-                          // money
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 20, bottom: 30),
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: Column(
-                                // mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsets.only(right: 14),
-                                    child: Text(
-                                      "Expense",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color:
-                                              Color.fromARGB(255, 154, 20, 10),
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      const Icon(Icons.currency_rupee,
-                                          color:
-                                              Color.fromARGB(255, 154, 20, 10)),
-                                      Text(
-                                        totalexpense.toString(),
-                                        style: const TextStyle(
-                                            fontSize: 20,
-                                            color: Color.fromARGB(
-                                                255, 154, 20, 10)),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                        )
+                      ],
                     ),
                   ),
                   // recent and view all

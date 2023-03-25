@@ -217,6 +217,7 @@ class _AddTransactionState extends State<AddTransaction> {
                               ),
                               Expanded(
                                 child: TextFormField(
+                                  maxLength: 10,
                                   controller: _amountEditinfController,
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
@@ -231,12 +232,17 @@ class _AddTransactionState extends State<AddTransaction> {
                                     }
                                     return null;
                                   }),
+                                  buildCounter: (BuildContext context,
+                                          {int? currentLength,
+                                          int? maxLength,
+                                          bool? isFocused}) =>
+                                      null,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Padding(

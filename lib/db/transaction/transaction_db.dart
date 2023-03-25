@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:money_management2/models/transactions/transaction_model.dart';
-import 'package:money_management2/widgets/pages/ViewAll/search_deligate.dart';
+import 'package:money_management2/widgets/pages/search/search.dart';
+import 'package:money_management2/widgets/pages/search/search_root.dart';
 import 'package:money_management2/widgets/pages/ViewAll/view_all.dart';
 
 // ignore: constant_identifier_names
@@ -39,6 +40,7 @@ class TransactionDB implements TransactionDbFunctions {
     Showlist.notifyListeners();
     allList.notifyListeners();
     searchResult.notifyListeners();
+    overViewListNotifier.notifyListeners();
   }
 
   @override
@@ -51,13 +53,14 @@ class TransactionDB implements TransactionDbFunctions {
   Future<void> deleteTransaction(String id) async {
     final db = await Hive.openBox<transactionModel>(TRANSACTION_DB_NAME);
     await db.delete(id);
-    refresh();
+    await refresh();
   }
 
   @override
   Future<void> editTransaction(transactionModel obj) async {
     final db = await Hive.openBox<transactionModel>(TRANSACTION_DB_NAME);
     await db.put(obj.id, obj);
-    refresh();
+    await refresh();
+    gettAllTransaction();
   }
 }

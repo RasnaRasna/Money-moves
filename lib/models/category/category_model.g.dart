@@ -49,6 +49,74 @@ class CategoryModelAdapter extends TypeAdapter<CategoryModel> {
           typeId == other.typeId;
 }
 
+class SelectCategoryAdapter extends TypeAdapter<SelectCategory> {
+  @override
+  final int typeId = 3;
+
+  @override
+  SelectCategory read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return SelectCategory(
+      selectcategory: fields[0] as String,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, SelectCategory obj) {
+    writer
+      ..writeByte(1)
+      ..writeByte(0)
+      ..write(obj.selectcategory);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SelectCategoryAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class SplashscreensAdapter extends TypeAdapter<Splashscreens> {
+  @override
+  final int typeId = 4;
+
+  @override
+  Splashscreens read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Splashscreens(
+      screens: fields[0] as int,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Splashscreens obj) {
+    writer
+      ..writeByte(1)
+      ..writeByte(0)
+      ..write(obj.screens);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SplashscreensAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
 class CategoryTypeAdapter extends TypeAdapter<CategoryType> {
   @override
   final int typeId = 2;

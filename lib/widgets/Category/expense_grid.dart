@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:money_management2/db/category/category_db.dart';
 import 'package:money_management2/widgets/Category/categoryy.dart';
+import '../../models/category/category_model.dart';
 
-import '../../../db/category/category_db.dart';
-import '../../../models/category/category_model.dart';
+class ExpenseCategory extends StatelessWidget {
+  const ExpenseCategory({Key? key}) : super(key: key);
 
-class IncomeCategory extends StatefulWidget {
-  const IncomeCategory({Key? key}) : super(key: key);
-
-  @override
-  State<IncomeCategory> createState() => _IncomeCategoryState();
-}
-
-class _IncomeCategoryState extends State<IncomeCategory> {
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<List<CategoryModel>>(
-      valueListenable: CategoryDB.instance.IncomeCategoryList,
+    return ValueListenableBuilder(
+      valueListenable: CategoryDB().expenseCategoryList,
       builder: (BuildContext ctx, List<CategoryModel> newlist, Widget? _) {
         if (newlist.isEmpty) {
           return Center(
@@ -28,53 +22,56 @@ class _IncomeCategoryState extends State<IncomeCategory> {
         } else {
           return ValueListenableBuilder(
               valueListenable: expense,
-              builder: ((context, value, child) {
+              builder: (context, value, child) {
                 if (value) {
                   return GridView.builder(
+                    padding: const EdgeInsets.all(8.0),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
                       childAspectRatio: 1.9,
+                      crossAxisSpacing: 8.0,
+                      mainAxisSpacing: 8.0,
                     ),
                     itemBuilder: (ctx, index) {
-                      final category = newlist[index];
+                      // ignore: non_constant_identifier_names
+                      final Category = newlist[index];
                       return Card(
                         elevation: 30,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: ListTile(
-                          title: Text(category.name),
+                          title: Text(Category.name),
                           trailing: IconButton(
                             onPressed: () {
                               showDialog(
                                 context: context,
                                 builder: (ctx) => AlertDialog(
                                   title: const Text(
-                                    'Delete Category',
+                                    'alert',
                                     style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.red,
-                                    ),
+                                        fontSize: 15, color: Colors.red),
                                   ),
-                                  content: Text(
-                                      'Do you want to delete ${category.name}?'),
+                                  content: const Text('Do you want to delete '),
                                   actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        CategoryDB.instance
-                                            .deleteCategory(category.id);
-                                        Navigator.of(ctx).pop();
-                                      },
-                                      child: const Text('Yes'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(ctx).pop();
-                                      },
-                                      child: const Text('No'),
+                                    Row(
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            CategoryDB.instance
+                                                .deleteCategory(Category.id);
+                                            Navigator.of(ctx).pop();
+                                          },
+                                          child: const Text('Yes'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(ctx).pop();
+                                          },
+                                          child: const Text('No'),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -92,7 +89,8 @@ class _IncomeCategoryState extends State<IncomeCategory> {
                 } else {
                   return ListView.separated(
                     itemBuilder: (ctx, index) {
-                      final category = newlist[index];
+                      // ignore: non_constant_identifier_names
+                      final Category = newlist[index];
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Card(
@@ -101,35 +99,37 @@ class _IncomeCategoryState extends State<IncomeCategory> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: ListTile(
-                            title: Text(category.name),
+                            title: Text(Category.name),
                             trailing: IconButton(
                               onPressed: () {
                                 showDialog(
                                   context: context,
                                   builder: (ctx) => AlertDialog(
                                     title: const Text(
-                                      'Delete Category',
+                                      'alert',
                                       style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.red,
-                                      ),
+                                          fontSize: 15, color: Colors.red),
                                     ),
-                                    content: Text(
-                                        'Do you want to delete ${category.name}?'),
+                                    content:
+                                        const Text('Do you want to delete '),
                                     actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          CategoryDB.instance
-                                              .deleteCategory(category.id);
-                                          Navigator.of(ctx).pop();
-                                        },
-                                        child: const Text('Yes'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(ctx).pop();
-                                        },
-                                        child: const Text('No'),
+                                      Row(
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              CategoryDB.instance
+                                                  .deleteCategory(Category.id);
+                                              Navigator.of(ctx).pop();
+                                            },
+                                            child: const Text('Yes'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(ctx).pop();
+                                            },
+                                            child: const Text('No'),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
@@ -147,7 +147,7 @@ class _IncomeCategoryState extends State<IncomeCategory> {
                     itemCount: newlist.length,
                   );
                 }
-              }));
+              });
         }
       },
     );

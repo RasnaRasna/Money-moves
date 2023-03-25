@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
+import 'package:money_management2/widgets/Homeone/Homeonet.dart';
+import 'package:money_management2/widgets/bottonm%20google/gbottom_bar.dart';
 
-class About extends StatelessWidget {
-  const About({super.key});
+class Privacy extends StatelessWidget {
+  const Privacy({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +24,26 @@ class About extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: ((context) => Bottomnav())));
+              },
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              )),
           backgroundColor: Colors.transparent,
-          centerTitle: true,
-          title: Text(
-            'About',
+          title: const Center(
+              child: Text(
+            'Privacy policy',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-          ),
+          )),
         ),
         body: Center(
           child: SizedBox(
             width: 300,
-            height: 300,
+            height: 400,
             child: Card(
               elevation: 60,
               color: Colors.white,
@@ -39,20 +51,19 @@ class About extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 70),
+                    padding: const EdgeInsets.only(top: 5),
                     child: Text(
                       'Money  Moves',
                       style: GoogleFonts.acme(fontSize: 30),
                     ),
                   ),
-                  Text(
-                    "Developrd By RASNA",
-                    style: GoogleFonts.caudex(
-                        fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                    width: 30,
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                      "This app values your Privacy and is commited to protecting your personal information We only collect information that is necessary to provide you with the best possible service .We do not sell or share your information with third parties your data is secured using industry standard measures.    ",
+                      style: GoogleFonts.caudex(
+                          fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
                   ),
                   const Text(
                     'version 1.0.1',

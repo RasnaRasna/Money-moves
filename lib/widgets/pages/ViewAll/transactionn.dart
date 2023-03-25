@@ -98,7 +98,18 @@ class _TransactonTilesState extends State<TransactonTiles> {
                           )
                         ]),
                         child: ListTile(
-                          leading: Text(parseDate(value.date)),
+                          leading: CircleAvatar(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 10, 92, 130),
+                              maxRadius: 40.0,
+                              child: Text(
+                                parseDate(value.date),
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                  wordSpacing: 1.0,
+                                ),
+                              )),
                           title: Text(value.category.name),
                           subtitle: Text(value.purpose),
                           trailing: RichText(
@@ -110,17 +121,18 @@ class _TransactonTilesState extends State<TransactonTiles> {
                                 fontWeight: FontWeight.bold,
                                 color:
                                     value.category.type == CategoryType.income
-                                        ? Color.fromARGB(255, 32, 115, 34)
+                                        ? const Color.fromARGB(255, 32, 115, 34)
                                         : Colors.red,
                               ),
                               children: [
                                 TextSpan(
-                                  text: "${value.amount}",
+                                  text: "₹  ${value.amount}",
                                   style: TextStyle(
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: value.category.type ==
                                             CategoryType.income
-                                        ? Color.fromARGB(255, 32, 115, 34)
+                                        ? const Color.fromARGB(255, 32, 115, 34)
                                         : Colors.red,
                                   ),
                                 ),
