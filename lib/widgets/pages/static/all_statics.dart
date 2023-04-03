@@ -5,7 +5,7 @@ import 'package:money_management2/models/transactions/transaction_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Allstatics extends StatelessWidget {
-  const Allstatics({Key? key});
+  const Allstatics({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +25,7 @@ class Allstatics extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ValueListenableBuilder(
                 valueListenable: TransactionDB.instance.transactionListNotifier,
@@ -70,6 +71,8 @@ class Allstatics extends StatelessWidget {
                             children: [
                               Image.asset(
                                 'lib/assets/images/output-onlinegiftools (2).gif',
+                                width: 200,
+                                height: 200,
                               ),
                             ],
                           ),

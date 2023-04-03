@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-
 import 'package:flutter/material.dart';
 import 'package:money_management2/db/transaction/transaction_db.dart';
 import 'package:money_management2/models/category/category_model.dart';
@@ -47,8 +46,7 @@ class ExpenseStatics extends StatelessWidget {
                         end: Alignment.bottomCenter,
                       ),
                     ),
-                    child: TransactionDB
-                            .instance.transactionListNotifier.value.isNotEmpty
+                    child: data.isNotEmpty
                         ? SfCircularChart(
                             series: <CircularSeries>[
                               DoughnutSeries(
@@ -60,15 +58,18 @@ class ExpenseStatics extends StatelessWidget {
                             ],
                             legend: Legend(
                                 isVisible: true,
-                                // position: LegendPosition.bottom,
+                                // position: LegendPosition.left,
                                 textStyle: const TextStyle(fontSize: 20)),
                           )
                         : Align(
                             alignment: Alignment.center,
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset(
                                   'lib/assets/images/output-onlinegiftools (2).gif',
+                                  width: 200,
+                                  height: 200,
                                 ),
                               ],
                             ),

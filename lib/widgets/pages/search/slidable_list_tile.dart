@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:money_management2/db/transaction/transaction_db.dart';
 import 'package:money_management2/models/category/category_model.dart';
 import 'package:money_management2/models/transactions/transaction_model.dart';
 import 'package:money_management2/widgets/pages/UpdateTransaction/update_transaction.dart';
+import 'package:money_management2/widgets/pages/search/search.dart';
 
 class SlidableTransaction extends StatelessWidget {
   const SlidableTransaction({super.key, required this.transaction});
@@ -13,6 +16,7 @@ class SlidableTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("slidble  build");
     return Slidable(
       endActionPane: ActionPane(motion: const StretchMotion(), children: [
         SlidableAction(
@@ -28,10 +32,11 @@ class SlidableTransaction extends StatelessWidget {
                     content: const Text('Do you want to delete '),
                     actions: [
                       TextButton(
-                          onPressed: (() {
-                            TransactionDB.instance
-                                .deleteTransaction(transaction.id.toString());
+                          onPressed: (() async {
                             Navigator.of(context).pop();
+                            await TransactionDB.instance
+                                .deleteTransaction(transaction.id.toString());
+                            SearchField.refreshShowlist();
                           }),
                           child: const Text(
                             'yes',
@@ -74,7 +79,7 @@ class SlidableTransaction extends StatelessWidget {
             );
           }),
           icon: Icons.edit,
-          foregroundColor: Colors.blue,
+          foregroundColor: Color.fromARGB(255, 5, 67, 96),
         ),
       ]),
       child: Card(
@@ -86,11 +91,11 @@ class SlidableTransaction extends StatelessWidget {
         ),
         child: ListTile(
           leading: CircleAvatar(
-              backgroundColor: Color.fromARGB(255, 10, 92, 130),
+              backgroundColor: const Color.fromARGB(255, 10, 92, 130),
               maxRadius: 40.0,
               child: Text(
                 parseDate(transaction.date),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 13,
                   color: Colors.white,
                   wordSpacing: 1.0,

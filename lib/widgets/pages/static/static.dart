@@ -66,7 +66,7 @@ class Statics extends StatelessWidget {
                 // bottom: TabBar(tabs: [Tab(text: "Income"), Tab(text: "Expense")]),
               ),
               body: TabBarView(children: [
-                Allstatics(),
+                const Allstatics(),
                 ExpenseStatics(incomeOrExpense: CategoryType.income),
                 ExpenseStatics(incomeOrExpense: CategoryType.expense),
               ]),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:google_fonts/google_fonts.dart';
-import 'package:money_management2/widgets/Homeone/Homeonet.dart';
 import 'package:money_management2/widgets/bottonm%20google/gbottom_bar.dart';
 
 class Privacy extends StatelessWidget {
@@ -26,10 +25,12 @@ class Privacy extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: ((context) => Bottomnav())));
+                // Navigator.of(context).push(MaterialPageRoute(
+                //     builder: ((context) => const Bottomnav())));
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.black,
               )),

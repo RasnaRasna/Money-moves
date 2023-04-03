@@ -61,12 +61,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:money_management2/OnbordingScreen/splash.dart';
-import 'package:money_management2/db/transaction/transaction_db.dart';
-
 import 'package:money_management2/models/category/category_model.dart';
 import 'package:money_management2/models/transactions/transaction_model.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
 
 int? isviewsd;
 
@@ -80,19 +76,11 @@ Future<void> main() async {
 
   // Register the TransactionModelAdapter and open the transactionModel box
   Hive.registerAdapter(transactionModelAdapter());
-  if (!Hive.isBoxOpen(TRANSACTION_DB_NAME)) {
-    await Hive.openBox<transactionModel>(TRANSACTION_DB_NAME);
-  }
 
-  // Register the SplashscreensAdapter and open the Splashscreens box
   Hive.registerAdapter(SplashscreensAdapter());
   if (!Hive.isBoxOpen('Splashscreens')) {
     await Hive.openBox<Splashscreens>('Splashscreens');
   }
-
-  // Get the isOnboarded value from SharedPreferences
-  // SharedPreferences prefs = await SharedPreferences.getInstance();
-  // isviewsd = prefs.getInt('isOnboarded');
 
   runApp(const MyApp());
 }

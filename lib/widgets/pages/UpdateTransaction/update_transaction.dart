@@ -1,15 +1,13 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:money_management2/db/transaction/transaction_db.dart';
 import 'package:money_management2/models/category/category_model.dart';
 import 'package:money_management2/models/transactions/transaction_model.dart';
+import 'package:money_management2/widgets/pages/ViewAll/view_all.dart';
+import 'package:money_management2/widgets/pages/search/search.dart';
 import '../../../db/category/category_db.dart';
 import '../Addtranscation/add_category_popup.dart';
-
-// final box = Hive.box<transactionModel>('transactio_db');
-// var history;
 
 class EditTransaction extends StatefulWidget {
   String? id;
@@ -39,8 +37,6 @@ class _EditTransactionState extends State<EditTransaction> {
   DateTime _selectedDate = DateTime.now();
   late TextEditingController transactionamount;
   late TextEditingController transactionpupose;
-  // late TextEditingController transactionnote;
-  // CategoryModel? transactioncategory;
 
   @override
   void initState() {
@@ -54,8 +50,6 @@ class _EditTransactionState extends State<EditTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    // history = box.values.toList();
-    // log(history);
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
@@ -82,40 +76,40 @@ class _EditTransactionState extends State<EditTransaction> {
           children: [
             Column(
               children: [
-                // Row(
-                //   children: [
-                //     Row(
-                //       children: [
-                //         Radio(
-                //             activeColor: const Color.fromARGB(255, 10, 92, 130),
-                //             value: CategoryType.income,
-                //             groupValue: _selectedCategorytype,
-                //             onChanged: (newValue) {
-                //               setState(() {
-                //                 _selectedCategorytype = CategoryType.income;
-                //                 _categoryID = null;
-                //               });
-                //             }),
-                //         const Text('income'),
-                //       ],
-                //     ),
-                //     Row(
-                //       children: [
-                //         Radio(
-                //             activeColor: const Color.fromARGB(255, 10, 92, 130),
-                //             value: CategoryType.expense,
-                //             groupValue: _selectedCategorytype,
-                //             onChanged: (newValue) {
-                //               setState(() {
-                //                 _selectedCategorytype = CategoryType.expense;
-                //                 _categoryID = null;
-                //               });
-                //             }),
-                //         const Text('Expense'),
-                //       ],
-                //     ),
-                //   ],
-                // ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        Radio(
+                            activeColor: const Color.fromARGB(255, 10, 92, 130),
+                            value: CategoryType.income,
+                            groupValue: _selectedCategorytype,
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedCategorytype = CategoryType.income;
+                                _categoryID = null;
+                              });
+                            }),
+                        const Text('income'),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Radio(
+                            activeColor: const Color.fromARGB(255, 10, 92, 130),
+                            value: CategoryType.expense,
+                            groupValue: _selectedCategorytype,
+                            onChanged: (newValue) {
+                              setState(() {
+                                _selectedCategorytype = CategoryType.expense;
+                                _categoryID = null;
+                              });
+                            }),
+                        const Text('Expense'),
+                      ],
+                    ),
+                  ],
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -163,7 +157,6 @@ class _EditTransactionState extends State<EditTransaction> {
                                       value: e.id,
                                       child: Text(e.name),
                                       onTap: () {
-                                        log(" fff ${CategoryDB().IncomeCategoryList.value.length}");
                                         _selectedCategoryModel = e;
                                       },
                                     );
@@ -291,7 +284,6 @@ class _EditTransactionState extends State<EditTransaction> {
                           if (selectDateTemp == null) {
                             return;
                           } else {
-                            print(selectDateTemp.toString());
                             setState(() {
                               _selectedDate = selectDateTemp;
                             });
@@ -360,7 +352,9 @@ class _EditTransactionState extends State<EditTransaction> {
         purpose: widget.pupose);
 
     TransactionDB.instance.editTransaction(model);
-    TransactionDB.instance.refresh();
+    await TransactionDB.instance.refresh();
+    SearchField.searchResult(searchQueryController.text);
+    Showlist.notifyListeners();
   }
 }
 

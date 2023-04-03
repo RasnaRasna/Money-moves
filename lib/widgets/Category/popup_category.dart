@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:money_management2/db/category/category_db.dart';
 import 'package:money_management2/models/category/category_model.dart';
@@ -59,10 +60,23 @@ Future<void> showCategoryAddPopup(BuildContext context) async {
                         id: DateTime.now().millisecondsSinceEpoch.toString(),
                         name: name,
                         type: type);
+
+                    AnimatedSnackBar.rectangle(
+                      'Success',
+                      'Category Added Successfully',
+                      type: AnimatedSnackBarType.success,
+                      brightness: Brightness.light,
+                      duration: const Duration(seconds: 4),
+                    ).show(context);
                     CategoryDB.instance.insertCategory(category);
                     Navigator.of(ctx).pop();
                   },
-                  child: const Text('Add')),
+                  child: const Text(
+                    'Add',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 5, 67, 96),
+                    ),
+                  )),
             )
           ],
         ),
@@ -85,6 +99,7 @@ class Radiobutton extends StatelessWidget {
           valueListenable: selectedCategoryNotifier,
           builder: (BuildContext ctx, CategoryType newCategory, Widget? _) {
             return Radio<CategoryType>(
+                activeColor: Color.fromARGB(255, 5, 67, 96),
                 value: type,
                 groupValue: selectedCategoryNotifier.value,
                 onChanged: (value) {

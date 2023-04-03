@@ -3,12 +3,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:money_management2/db/transaction/transaction_db.dart';
 import 'package:money_management2/models/transactions/transaction_model.dart';
+import 'package:money_management2/widgets/pages/ViewAll/view_all.dart';
 
+final TextEditingController searchQueryController = TextEditingController();
 ValueNotifier<List<transactionModel>> overViewListNotifier = ValueNotifier([]);
 
 class SearchField extends StatelessWidget {
   SearchField({super.key});
-  final TextEditingController _searchQueryController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,8 +23,8 @@ class SearchField extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: TextField(
-            controller: _searchQueryController,
-            onChanged: (value) {
+            controller: searchQueryController,
+            onChanged: (value) async {
               searchResult(value);
             },
             decoration: InputDecoration(
@@ -36,7 +38,9 @@ class SearchField extends StatelessWidget {
                     onPressed: () {
                       overViewListNotifier.value =
                           TransactionDB.instance.transactionListNotifier.value;
-                      _searchQueryController.clear();
+                      searchQueryController.clear();
+                      searchResult(searchQueryController.text);
+                      Showlist.notifyListeners();
                     },
                     icon: const Icon(
                       Icons.close,
@@ -48,23 +52,23 @@ class SearchField extends StatelessWidget {
     );
   }
 
-  searchResult(String value) {
-    if (value.isEmpty) {
-      overViewListNotifier.value =
-          TransactionDB.instance.transactionListNotifier.value;
-      // overViewListNotifier.notifyListeners();
-    } else {
-      log("else is working");
+  static void refreshShowlist() {
+    searchResult(searchQueryController.text);
+    Showlist.notifyListeners();
+  }
 
-      overViewListNotifier.value = overViewListNotifier.value
+  static searchResult(String value) {
+    if (value.isEmpty) {
+      Showlist.value = TransactionDB.instance.transactionListNotifier.value;
+    } else {
+      // log("log hereeeeeeee${overViewListNotifier.value[0].amount}");
+      Showlist.value = TransactionDB.instance.transactionListNotifier.value
           .where((element) =>
               element.category.name
                   .toLowerCase()
                   .contains(value.trim().toLowerCase()) ||
               element.purpose.contains(value.toLowerCase().trim()))
           .toList();
-      // overViewListNotifier.notifyListeners();
-      log(overViewListNotifier.value.length.toString());
     }
   }
 }

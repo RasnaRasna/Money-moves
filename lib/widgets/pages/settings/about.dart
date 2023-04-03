@@ -24,8 +24,13 @@ class About extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: ((context) => Bottomnav())));
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const Bottomnav(),
+                  ),
+                );
+                // Navigator.of(context).push(MaterialPageRoute(
+                //     builder: ((context) => const Bottomnav())));
               },
               icon: const Icon(
                 Icons.arrow_back,
@@ -62,7 +67,7 @@ class About extends StatelessWidget {
                   width: 30,
                 ),
                 const Text(
-                  'version 1.0.1',
+                  'version 1.0.2',
                   style: TextStyle(color: Colors.grey),
                 )
               ],

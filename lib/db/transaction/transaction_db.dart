@@ -4,6 +4,7 @@ import 'package:money_management2/models/transactions/transaction_model.dart';
 import 'package:money_management2/widgets/pages/search/search.dart';
 import 'package:money_management2/widgets/pages/search/search_root.dart';
 import 'package:money_management2/widgets/pages/ViewAll/view_all.dart';
+import 'package:money_management2/widgets/pages/search/slidable_list_tile.dart';
 
 // ignore: constant_identifier_names
 const TRANSACTION_DB_NAME = 'transactio_db';
@@ -34,6 +35,7 @@ class TransactionDB implements TransactionDbFunctions {
 
   Future<void> refresh() async {
     final list = await gettAllTransaction();
+    list.sort((first, second) => second.date.compareTo(first.date));
     transactionListNotifier.value.clear();
     transactionListNotifier.value.addAll(list);
     transactionListNotifier.notifyListeners();
@@ -41,6 +43,8 @@ class TransactionDB implements TransactionDbFunctions {
     allList.notifyListeners();
     searchResult.notifyListeners();
     overViewListNotifier.notifyListeners();
+
+    ///
   }
 
   @override
@@ -54,6 +58,11 @@ class TransactionDB implements TransactionDbFunctions {
     final db = await Hive.openBox<transactionModel>(TRANSACTION_DB_NAME);
     await db.delete(id);
     await refresh();
+    // await gettAllTransaction();
+    searchQueryController.clear();
+    overViewListNotifier.notifyListeners();
+    // transactiontype.notifyListeners();
+    listtodisplay.notifyListeners();
   }
 
   @override
@@ -61,6 +70,9 @@ class TransactionDB implements TransactionDbFunctions {
     final db = await Hive.openBox<transactionModel>(TRANSACTION_DB_NAME);
     await db.put(obj.id, obj);
     await refresh();
-    gettAllTransaction();
+    await gettAllTransaction();
+    // transactiontype.notifyListeners();
+    listtodisplay.notifyListeners();
+    overViewListNotifier.notifyListeners();
   }
 }

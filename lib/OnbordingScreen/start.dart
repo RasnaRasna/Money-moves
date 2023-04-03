@@ -18,7 +18,7 @@ class Started extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 100, left: 30),
               child: Text(
-                "Grow your Money orderley\n  Let's get started ",
+                "Grow your Money orderly\n  Let's get started ",
                 style: GoogleFonts.acme(fontSize: 30),
               ),
             ),

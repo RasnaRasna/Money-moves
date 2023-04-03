@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +8,7 @@ import 'package:money_management2/models/category/category_model.dart';
 import 'package:money_management2/models/transactions/transaction_model.dart';
 
 import 'package:money_management2/widgets/pages/Addtranscation/add_category_popup.dart';
+import 'package:money_management2/widgets/pages/Addtranscation/transactionform.dart';
 // TextEditingController addcategorycontroller=TextEditingController();
 
 class AddTransaction extends StatefulWidget {
@@ -28,17 +28,17 @@ class _AddTransactionState extends State<AddTransaction> {
   final _amountEditinfController = TextEditingController();
 
   final _formkey = GlobalKey<FormState>();
-  String? _validateCategory(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please select a category';
-    }
-    return null;
-  }
 
   @override
   void initState() {
     _selectedCategorytype = CategoryType.income;
     super.initState();
+  }
+
+  void _updateDate(DateTime? newDate) {
+    setState(() {
+      _selectedDate = newDate;
+    });
   }
 
   @override
@@ -75,7 +75,8 @@ class _AddTransactionState extends State<AddTransaction> {
                         Row(
                           children: [
                             Radio(
-                                activeColor: Color.fromARGB(255, 10, 92, 130),
+                                activeColor:
+                                    const Color.fromARGB(255, 10, 92, 130),
                                 value: CategoryType.income,
                                 groupValue: _selectedCategorytype,
                                 onChanged: (newValue) {
@@ -90,7 +91,8 @@ class _AddTransactionState extends State<AddTransaction> {
                         Row(
                           children: [
                             Radio(
-                                activeColor: Color.fromARGB(255, 10, 92, 130),
+                                activeColor:
+                                    const Color.fromARGB(255, 10, 92, 130),
                                 value: CategoryType.expense,
                                 groupValue: _selectedCategorytype,
                                 onChanged: (newValue) {
@@ -115,15 +117,15 @@ class _AddTransactionState extends State<AddTransaction> {
                         children: [
                           Container(
                               decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 10, 92, 130),
+                                  color: const Color.fromARGB(255, 10, 92, 130),
                                   borderRadius: BorderRadius.circular(10)),
-                              padding: EdgeInsets.all(7),
-                              child: Icon(
+                              padding: const EdgeInsets.all(7),
+                              child: const Icon(
                                 Icons.menu_sharp,
                                 size: 18,
                                 color: Colors.white,
                               )),
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
                           Row(
@@ -135,9 +137,6 @@ class _AddTransactionState extends State<AddTransaction> {
                                       CategoryDB().expenseCategoryList,
                                   builder: (context, value, child) =>
                                       ValueListenableBuilder(
-                                    // li
-
-                                    //     CategoryDB().IncomeCategoryList,
                                     valueListenable:
                                         CategoryDB().IncomeCategoryList,
                                     builder: (context, value, child) =>
@@ -155,7 +154,6 @@ class _AddTransactionState extends State<AddTransaction> {
                                           value: e.id,
                                           child: Text(e.name),
                                           onTap: () {
-                                            log(" fff ${CategoryDB().IncomeCategoryList.value.length}");
                                             _selectedCategoryModel = e;
                                           },
                                         );
@@ -164,14 +162,6 @@ class _AddTransactionState extends State<AddTransaction> {
                                         setState(() {
                                           _categoryID = selectedValue;
                                         });
-                                        // String? validationMessage =
-                                        //     _validateCategory(selectedValue);
-                                        // if (validationMessage != null) {
-                                        //   ScaffoldMessenger.of(context)
-                                        //       .showSnackBar(SnackBar(
-                                        //           content:
-                                        //               Text(validationMessage)));
-                                        // }
                                       },
                                     ),
                                   ),
@@ -193,163 +183,173 @@ class _AddTransactionState extends State<AddTransaction> {
                         ],
                       ),
                     ),
-                    Column(
-                      children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 7),
-                          child: Row(
-                            children: [
-                              Container(
-                                  decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 10, 92, 130),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  padding: EdgeInsets.all(7),
-                                  child: Icon(
-                                    Icons.attach_money,
-                                    size: 20,
-                                    color: Colors.white,
-                                  )),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  maxLength: 10,
-                                  controller: _amountEditinfController,
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Enter Amonut'),
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly
-                                  ],
-                                  keyboardType: TextInputType.number,
-                                  validator: ((value) {
-                                    if (value?.isEmpty ?? true) {
-                                      return 'Amount is Required';
-                                    }
-                                    return null;
-                                  }),
-                                  buildCounter: (BuildContext context,
-                                          {int? currentLength,
-                                          int? maxLength,
-                                          bool? isFocused}) =>
-                                      null,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 7),
-                          child: Row(
-                            children: [
-                              Container(
-                                  decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 10, 92, 130),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  padding: EdgeInsets.all(7),
-                                  child: Icon(
-                                    Icons.description,
-                                    color: Colors.white,
-                                    size: 20,
-                                  )),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: _purpposeEditinfController,
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Note On Transaction'),
-                                  validator: (value) {
-                                    if (value?.isEmpty ?? true) {
-                                      return " purpose is Requuired";
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    buildTransactionForm(
+                        _amountEditinfController,
+                        _purpposeEditinfController,
+                        context,
+                        _selectedDate,
+                        _updateDate)
+                    // Column(
+                    //   children: [
+                    //     const SizedBox(
+                    //       height: 20,
+                    //     ),
+                    //     Padding(
+                    //       padding: const EdgeInsets.only(left: 7),
+                    //       child: Row(
+                    //         children: [
+                    //           Container(
+                    //               decoration: BoxDecoration(
+                    //                   color: const Color.fromARGB(
+                    //                       255, 10, 92, 130),
+                    //                   borderRadius: BorderRadius.circular(10)),
+                    //               padding: const EdgeInsets.all(7),
+                    //               child: const Icon(
+                    //                 Icons.attach_money,
+                    //                 size: 20,
+                    //                 color: Colors.white,
+                    //               )),
+                    //           const SizedBox(
+                    //             width: 20,
+                    //           ),
+                    //           Expanded(
+                    //             child: TextFormField(
+                    //               maxLength: 10,
+                    //               controller: _amountEditinfController,
+                    //               decoration: const InputDecoration(
+                    //                   border: InputBorder.none,
+                    //                   hintText: 'Enter Amount'),
+                    //               inputFormatters: [
+                    //                 FilteringTextInputFormatter.digitsOnly
+                    //               ],
+                    //               keyboardType: TextInputType.number,
+                    //               validator: ((value) {
+                    //                 if (value?.isEmpty ?? true) {
+                    //                   return 'Amount is Required';
+                    //                 }
+                    //                 return null;
+                    //               }),
+                    //               buildCounter: (BuildContext context,
+                    //                       {int? currentLength,
+                    //                       int? maxLength,
+                    //                       bool? isFocused}) =>
+                    //                   null,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //     const SizedBox(
+                    //       height: 25,
+                    //     ),
+                    //     Padding(
+                    //       padding: const EdgeInsets.only(left: 7),
+                    //       child: Row(
+                    //         children: [
+                    //           Container(
+                    //               decoration: BoxDecoration(
+                    //                   color: const Color.fromARGB(
+                    //                       255, 10, 92, 130),
+                    //                   borderRadius: BorderRadius.circular(10)),
+                    //               padding: const EdgeInsets.all(7),
+                    //               child: const Icon(
+                    //                 Icons.description,
+                    //                 color: Colors.white,
+                    //                 size: 20,
+                    //               )),
+                    //           const SizedBox(
+                    //             width: 20,
+                    //           ),
+                    //           Expanded(
+                    //             child: TextFormField(
+                    //               controller: _purpposeEditinfController,
+                    //               decoration: const InputDecoration(
+                    //                   border: InputBorder.none,
+                    //                   hintText: 'Note On Transaction'),
+                    //               validator: (value) {
+                    //                 if (value?.isEmpty ?? true) {
+                    //                   return " purpose is Requuired";
+                    //                 }
+                    //                 return null;
+                    //               },
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
 
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    //calender
+                    ,
 
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: TextButton.icon(
-                        onPressed: () async {
-                          final selectDateTemp = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.now()
-                                .subtract(const Duration(days: 10 * 365)),
-                            lastDate: DateTime.now(),
-                            // set the initial colorScheme
-                            builder: (BuildContext context, Widget? child) {
-                              return Theme(
-                                data: ThemeData.light().copyWith(
-                                  colorScheme: ColorScheme.fromSwatch(
-                                    primarySwatch: Colors
-                                        .blueGrey, // set the primary color
-                                    // set other colors as desired
-                                  ),
-                                ),
-                                child: child!,
-                              );
-                            },
-                          );
-                          if (selectDateTemp == null) {
-                            return;
-                          } else {
-                            print(selectDateTemp.toString());
-                            setState(() {
-                              _selectedDate = selectDateTemp;
-                            });
-                          }
-                        },
-                        icon: Padding(
-                          padding: EdgeInsets.only(right: 10),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 10, 92, 130),
-                                  borderRadius: BorderRadius.circular(10)),
-                              padding: EdgeInsets.all(8),
-                              child: Icon(
-                                Icons.calendar_month,
-                                color: Colors.white,
-                                size: 20,
-                              )),
-                        ),
-                        label: Text(
-                          _selectedDate == null
-                              ? 'select date'
-                              : parseDate(_selectedDate!),
-                          style:
-                              TextStyle(color: Color.fromARGB(255, 83, 82, 82)),
-                        ),
-                      ),
-                    ),
+                    // //calender
 
-                    SizedBox(height: 20),
+                    // Align(
+                    //   alignment: Alignment.bottomLeft,
+                    //   child: Form(
+                    //     child: TextButton.icon(
+                    //       onPressed: () async {
+                    //         final selectDateTemp = await showDatePicker(
+                    //           context: context,
+                    //           initialDate: DateTime.now(),
+                    //           firstDate: DateTime.now()
+                    //               .subtract(const Duration(days: 10 * 365)),
+                    //           lastDate: DateTime.now(),
+                    //           // set the initial colorScheme
+                    //           builder: (BuildContext context, Widget? child) {
+                    //             return Theme(
+                    //               data: ThemeData.light().copyWith(
+                    //                 colorScheme: ColorScheme.fromSwatch(
+                    //                   primarySwatch: Colors.blueGrey,
+                    //                   // set the primary color
+                    //                   // set other colors as desired
+                    //                 ),
+                    //               ),
+                    //               child: child!,
+                    //             );
+                    //           },
+                    //         );
+                    //         if (selectDateTemp == null) {
+                    //           return;
+                    //         } else {
+                    //           setState(() {
+                    //             _selectedDate = selectDateTemp;
+                    //           });
+                    //         }
+                    //       },
+                    //       icon: Padding(
+                    //         padding: const EdgeInsets.only(right: 10),
+                    //         child: Container(
+                    //             decoration: BoxDecoration(
+                    //                 color:
+                    //                     const Color.fromARGB(255, 10, 92, 130),
+                    //                 borderRadius: BorderRadius.circular(10)),
+                    //             padding: const EdgeInsets.all(8),
+                    //             child: const Icon(
+                    //               Icons.calendar_month,
+                    //               color: Colors.white,
+                    //               size: 20,
+                    //             )),
+                    //       ),
+                    //       label: Text(
+                    //         _selectedDate == null
+                    //             ? 'select date'
+                    //             : parseDate(_selectedDate!),
+                    //         style: const TextStyle(
+                    //             color: Color.fromARGB(255, 83, 82, 82)),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+
+                    const SizedBox(height: 20),
                     SizedBox(
                       height: 40,
                       width: 100,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 10, 92, 130),
+                            backgroundColor:
+                                const Color.fromARGB(255, 10, 92, 130),
                           ),
                           onPressed: () {
                             addTransaction();
@@ -412,7 +412,7 @@ class _AddTransactionState extends State<AddTransaction> {
       'Transaction Added Successfully',
       type: AnimatedSnackBarType.success,
       brightness: Brightness.light,
-      duration: Duration(seconds: 4),
+      duration: const Duration(seconds: 4),
     ).show(context);
   }
 }

@@ -48,7 +48,12 @@ Future<void> addPopupOnly({context, required selectedCategoryType}) async {
               CategoryDB.instance.insertCategory(category);
               Navigator.of(ctx).pop();
             },
-            child: const Text('Add'),
+            child: const Text(
+              'Add',
+              style: TextStyle(
+                color: Color.fromARGB(255, 5, 67, 96),
+              ),
+            ),
           ),
         ],
       );

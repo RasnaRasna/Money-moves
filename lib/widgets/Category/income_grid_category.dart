@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:money_management2/widgets/Category/categoryy.dart';
 
 import '../../db/category/category_db.dart';
@@ -21,8 +22,8 @@ class _IncomeCategoryState extends State<IncomeCategory> {
           return Center(
             child: Image.asset(
               'lib/assets/images/output-onlinegiftools (2).gif',
-              height: 300,
-              width: 300,
+              height: 200,
+              width: 200,
             ),
           );
         } else {
@@ -46,7 +47,10 @@ class _IncomeCategoryState extends State<IncomeCategory> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: ListTile(
-                          title: Text(category.name),
+                          title: Text(
+                            category.name,
+                            style: GoogleFonts.acme(),
+                          ),
                           trailing: IconButton(
                             onPressed: () {
                               showDialog(
@@ -68,7 +72,10 @@ class _IncomeCategoryState extends State<IncomeCategory> {
                                             .deleteCategory(category.id);
                                         Navigator.of(ctx).pop();
                                       },
-                                      child: const Text('Yes'),
+                                      child: const Text(
+                                        'Yes',
+                                        style: TextStyle(color: Colors.red),
+                                      ),
                                     ),
                                     TextButton(
                                       onPressed: () {
@@ -101,7 +108,10 @@ class _IncomeCategoryState extends State<IncomeCategory> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: ListTile(
-                            title: Text(category.name),
+                            title: Text(
+                              category.name,
+                              style: GoogleFonts.acme(),
+                            ),
                             trailing: IconButton(
                               onPressed: () {
                                 showDialog(
@@ -123,7 +133,10 @@ class _IncomeCategoryState extends State<IncomeCategory> {
                                               .deleteCategory(category.id);
                                           Navigator.of(ctx).pop();
                                         },
-                                        child: const Text('Yes'),
+                                        child: const Text(
+                                          'Yes',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
                                       ),
                                       TextButton(
                                         onPressed: () {

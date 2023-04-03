@@ -8,7 +8,9 @@ import 'package:money_management2/widgets/pages/UpdateTransaction/update_transac
 import 'package:intl/intl.dart';
 
 class TransactonTiles extends StatefulWidget {
-  const TransactonTiles({super.key});
+  const TransactonTiles({
+    super.key,
+  });
 
   @override
   State<TransactonTiles> createState() => _TransactonTilesState();
@@ -27,8 +29,8 @@ class _TransactonTilesState extends State<TransactonTiles> {
               ? Center(
                   child: Image.asset(
                     'lib/assets/images/output-onlinegiftools (2).gif',
-                    height: 300,
-                    width: 300,
+                    height: 200,
+                    width: 200,
                   ),
                 )
               : ListView.separated(

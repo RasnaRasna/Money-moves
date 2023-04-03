@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:money_management2/db/category/category_db.dart';
 import 'package:money_management2/widgets/Category/categoryy.dart';
 import '../../models/category/category_model.dart';
@@ -15,8 +16,8 @@ class ExpenseCategory extends StatelessWidget {
           return Center(
             child: Image.asset(
               'lib/assets/images/output-onlinegiftools (2).gif',
-              height: 300,
-              width: 300,
+              height: 200,
+              width: 200,
             ),
           );
         } else {
@@ -42,7 +43,10 @@ class ExpenseCategory extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: ListTile(
-                          title: Text(Category.name),
+                          title: Text(
+                            Category.name,
+                            style: GoogleFonts.acme(),
+                          ),
                           trailing: IconButton(
                             onPressed: () {
                               showDialog(
@@ -63,7 +67,10 @@ class ExpenseCategory extends StatelessWidget {
                                                 .deleteCategory(Category.id);
                                             Navigator.of(ctx).pop();
                                           },
-                                          child: const Text('Yes'),
+                                          child: const Text(
+                                            'Yes',
+                                            style: TextStyle(color: Colors.red),
+                                          ),
                                         ),
                                         TextButton(
                                           onPressed: () {
@@ -99,7 +106,10 @@ class ExpenseCategory extends StatelessWidget {
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: ListTile(
-                            title: Text(Category.name),
+                            title: Text(
+                              Category.name,
+                              style: GoogleFonts.acme(),
+                            ),
                             trailing: IconButton(
                               onPressed: () {
                                 showDialog(
@@ -121,7 +131,11 @@ class ExpenseCategory extends StatelessWidget {
                                                   .deleteCategory(Category.id);
                                               Navigator.of(ctx).pop();
                                             },
-                                            child: const Text('Yes'),
+                                            child: const Text(
+                                              'Yes',
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            ),
                                           ),
                                           TextButton(
                                             onPressed: () {

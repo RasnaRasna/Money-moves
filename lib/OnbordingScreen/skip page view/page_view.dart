@@ -7,12 +7,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../onbording_functions.dart';
 
-// _storeOnboardInfo() async {
-//   int isViewed = 0;
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   await prefs.setInt('onBoard', isViewed);
-// }
-
 class Pageview extends StatefulWidget {
   const Pageview({super.key});
 

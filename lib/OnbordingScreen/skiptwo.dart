@@ -21,7 +21,7 @@ class Skiptwo extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 100, left: 30),
                 child: Text(
-                  'Arrage  your money \nconvenientley',
+                  'Arrange  your money \nconvenientley',
                   style: GoogleFonts.acme(fontSize: 30),
                 ),
               ),

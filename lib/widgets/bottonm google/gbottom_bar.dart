@@ -16,9 +16,9 @@ class _BottomnavState extends State<Bottomnav> {
   int Selectedindex = 0;
 
   final List<Widget> tabs = [
-    HomeTransactonn(),
-    Categoryy(),
-    Statics(),
+    const HomeTransactonn(),
+    const Categoryy(),
+    const Statics(),
   ];
 
   @override

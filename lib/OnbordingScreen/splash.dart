@@ -1,11 +1,9 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:google_fonts/google_fonts.dart';
-import 'package:money_management2/OnbordingScreen/onbordingScreen.dart';
+
 import 'package:money_management2/OnbordingScreen/skip%20page%20view/page_view.dart';
-import 'package:money_management2/OnbordingScreen/start.dart';
-import 'package:money_management2/main.dart';
+
 import 'package:money_management2/models/category/category_model.dart';
 
 import '../widgets/bottonm google/gbottom_bar.dart';
@@ -20,6 +18,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
+    Splashscreens.getdata();
     Splashscreens.getdata().values.isEmpty
         ? const Pageview()
         : const Bottomnav();
@@ -40,7 +39,7 @@ class _HomePageState extends State<HomePage> {
         shape: BoxShape.rectangle,
       ),
       child: AnimatedSplashScreen(
-        duration: 2000,
+        duration: 1700,
         backgroundColor: Colors.transparent,
         splashTransition: SplashTransition.fadeTransition,
         nextScreen: Splashscreens.getdata().values.isEmpty
@@ -48,18 +47,22 @@ class _HomePageState extends State<HomePage> {
             : const Bottomnav(),
         splash: Scaffold(
           backgroundColor: Colors.transparent,
-          body: Column(
+          body: Wrap(
             children: [
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: Center(
-                  child: Text(
-                    'Money Moves',
-                    style: GoogleFonts.acme(fontSize: 30),
-                  ),
+              Center(
+                child: Text(
+                  'Money Moves',
+                  style: GoogleFonts.acme(fontSize: 30),
                 ),
               ),
-              const Text('version 1.0.1'),
+              const Center(child: Text('version 1.0.2')),
+              // Center(
+              //   child: SizedBox(
+              //       height: 100,
+              //       width: 100,
+              //       child: Image.asset(
+              //           'lib/assets/output-onlinegiftools (3).gif')),
+              // ),
             ],
           ),
         ),
